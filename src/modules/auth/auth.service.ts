@@ -1,4 +1,4 @@
-import { User } from './auth.model';
+import { User } from '../user/user.model';
 import { Wallet } from '../wallet/wallet.model';
 import { Agent } from '../agent/agent.model';
 import { hashPassword, comparePassword } from '../../utility/password';
