@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { Document } from 'mongoose';
+import { Request } from 'express';
 
 // Base types
 export interface IUser extends Document {
