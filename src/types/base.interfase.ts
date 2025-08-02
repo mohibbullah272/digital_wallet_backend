@@ -7,7 +7,6 @@ export interface IUser extends Document {
   name: string;
   email: string;
   password: string;
-  phone: string;
   role: 'admin' | 'user' | 'agent';
   status: 'active' | 'blocked';
   createdAt: Date;
@@ -69,8 +68,8 @@ export const registerSchema = z.object({
   name: z.string().min(1, "Name is required"),
   email: z.string(),
   password: z.string().min(6, "Password must be at least 6 characters"),
-  phone: z.string().min(1, "Phone number is required"),
-  role: z.enum(["user", "agent"]).default("user")
+ 
+  role: z.enum(["user", "agent","admin"]).default("user")
 });
 
 export const loginSchema = z.object({

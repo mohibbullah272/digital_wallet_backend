@@ -13,7 +13,6 @@ export const register = async (req: Request, res: Response): Promise<void> => {
         id: user._id,
         name: user.name,
         email: user.email,
-        phone: user.phone,
         role: user.role
       },
       token
@@ -33,7 +32,6 @@ export const login = async (req: Request, res: Response): Promise<void> => {
         id: user._id,
         name: user.name,
         email: user.email,
-        phone: user.phone,
         role: user.role
       },
       token,

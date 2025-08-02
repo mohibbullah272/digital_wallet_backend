@@ -1,7 +1,6 @@
 import jwt, { SignOptions } from 'jsonwebtoken';
 
-
-const secret = process.env.JWT_SECRET;
+const secret =process.env.JWT_SECRET || "dfjdsjvcxvklxcxjcx";
 if (!secret) {
     throw new Error("JWT_SECRET is not defined");
   }

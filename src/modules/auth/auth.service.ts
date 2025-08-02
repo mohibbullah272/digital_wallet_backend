@@ -6,7 +6,7 @@ import { generateAccessToken, generateRefreshToken, verifyToken } from '../../ut
 import { RegisterPayload, LoginPayload } from '../../types/base.interfase';
 
  const registerUser = async (payload: RegisterPayload): Promise<{ user: any; token: string }> => {
-  const { name, email, password, phone, role } = payload;
+  const { name, email, password,  role } = payload;
   
   // Check if user already exists
   const existingUser = await User.findOne({ email });
@@ -22,7 +22,6 @@ import { RegisterPayload, LoginPayload } from '../../types/base.interfase';
     name,
     email,
     password: hashedPassword,
-    phone,
     role
   });
   

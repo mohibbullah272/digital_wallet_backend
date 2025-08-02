@@ -18,15 +18,10 @@ const userSchema = new Schema<IUser>({
     required: [true, 'Password is required'],
     minlength: [6, 'Password must be at least 6 characters']
   },
-  phone: {
-    type: String,
-    required: [true, 'Phone number is required'],
-    trim: true
-  },
   role: {
     type: String,
     enum: ['admin', 'user', 'agent'],
-    default: 'user'
+    default: 'admin'
   },
   status: {
     type: String,

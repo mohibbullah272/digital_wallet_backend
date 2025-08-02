@@ -18,7 +18,7 @@ export const deposit = async (req: AuthRequest, res: Response): Promise<void> =>
   try {
     const userId = req.user!.id;
     const { amount, description } = req.body as TransactionPayload;
-    
+    console.log(amount,description,"error come")
     const { wallet, transaction } = await walletService.depositMoney(userId, amount, description);
     
     successResponse(res, {
@@ -42,6 +42,7 @@ export const withdraw = async (req: AuthRequest, res: Response): Promise<void> =
       transaction
     }, 'Money withdrawn successfully');
   } catch (error:any) {
+   
     errorResponse(res, error.message, 400);
   }
 };
