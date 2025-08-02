@@ -1,5 +1,5 @@
 
-```markdown
+
 # Digital Wallet Management System
 
 A secure, scalable digital wallet API built with Node.js, Express, and Mongoose. This API provides role-based access control for users, agents, and administrators with features like wallet management, transactions, and commission tracking.
@@ -920,5 +920,4 @@ Common error codes:
 * `500`: Internal Server Error
 
 
-```
 
