@@ -8,6 +8,13 @@ export const register = async (req: Request, res: Response): Promise<void> => {
     const payload: RegisterPayload = req.body;
     const { user, token } = await authService.registerUser(payload);
     
+    res.cookie("token", token, {
+      httpOnly: true,       
+      secure:true,
+      sameSite: "strict",   
+    });
+
+
     successResponse(res, {
       user: {
         id: user._id,
@@ -15,8 +22,9 @@ export const register = async (req: Request, res: Response): Promise<void> => {
         email: user.email,
         role: user.role
       },
-      token
+   
     }, 'User registered successfully', 201);
+
   } catch (error:any) {
     errorResponse(res, error.message, 400);
   }
@@ -27,6 +35,22 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     const payload: LoginPayload = req.body;
     const { user, token, refreshToken } = await authService.loginUser(payload);
     
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      maxAge: 15 * 60 * 1000 // 15 min
+    });
+
+    // set refresh token cookie
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure:true ,
+      sameSite: "strict",
+
+    });
+
     successResponse(res, {
       user: {
         id: user._id,
@@ -34,8 +58,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
         email: user.email,
         role: user.role
       },
-      token,
-      refreshToken
+     
     }, 'Login successful');
   } catch (error:any) {
     errorResponse(res, error.message, 401);
