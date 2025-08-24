@@ -1,37 +1,44 @@
 import { Transaction } from './transaction.model';
 
- const getUserTransactions = async (userId: string, page: number = 1, limit: number = 10): Promise<any> => {
+const getUserTransactions = async (
+  email: string,
+  userId: string,
+  page: number = 1,
+  limit: number = 10
+): Promise<any> => {
   const skip = (page - 1) * limit;
-  
-  const transactions = await Transaction.find({
-    $or: [
-      { initiatedBy: userId },
-      { senderId: userId },
-      { receiverId: userId }
-    ]
-  })
-  .sort({ createdAt: -1 })
-  .skip(skip)
-  .limit(limit);
-  
-  const total = await Transaction.countDocuments({
-    $or: [
-      { initiatedBy: userId },
-      { senderId: userId },
-      { receiverId: userId }
-    ]
-  });
-  
+
+  // Query condition for both cases
+  const conditions = [
+    // For transfer (email-based identifiers)
+    { $and: [{ type: "transfer" }, { initiatedBy: email }] },
+    { $and: [{ type: "transfer" }, { senderId: email }] },
+    { $and: [{ type: "transfer" }, { receiverId: email }] },
+
+    // For other types (id-based identifiers)
+    { $and: [{ type: { $ne: "transfer" } }, { initiatedBy: userId }] },
+    { $and: [{ type: { $ne: "transfer" } }, { senderId: userId }] },
+    { $and: [{ type: { $ne: "transfer" } }, { receiverId: userId }] },
+  ];
+
+  const transactions = await Transaction.find({ $or: conditions })
+    .sort({ createdAt: -1 })
+    .skip(skip)
+    .limit(limit);
+
+  const total = await Transaction.countDocuments({ $or: conditions });
+
   return {
     transactions,
     pagination: {
       total,
       page,
       limit,
-      pages: Math.ceil(total / limit)
-    }
+      pages: Math.ceil(total / limit),
+    },
   };
 };
+
 
  const getTransactionById = async (transactionId: string): Promise<any> => {
   const transaction = await Transaction.findById(transactionId);

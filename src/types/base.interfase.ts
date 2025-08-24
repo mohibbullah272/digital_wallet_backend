@@ -7,6 +7,7 @@ export interface IUser extends Document {
   name: string;
   email: string;
   password: string;
+  phone?:string;
   role: 'admin' | 'user' | 'agent';
   status: 'active' | 'blocked';
   createdAt: Date;
@@ -14,6 +15,7 @@ export interface IUser extends Document {
 }
 
 export interface IWallet extends Document {
+  email:string,
   userId: string;
   balance: number;
   status: 'active' | 'blocked';
@@ -37,6 +39,7 @@ export interface ITransaction extends Document {
 
 export interface IAgent extends Document {
   userId: string;
+  email:string
   commissionRate: number;
   approvalStatus: 'pending' | 'approved' | 'suspended';
   createdAt: Date;
@@ -83,13 +86,13 @@ export const transactionSchema = z.object({
 });
 
 export const transferSchema = z.object({
-  receiverId: z.string().min(1, "Receiver ID is required"),
+  email:z.email({message:"email is required"}),
   amount: z.number().positive("Amount must be greater than 0"),
   description: z.string().optional()
 });
 
 export const agentTransactionSchema = z.object({
-  userId: z.string().min(1, "User ID is required"),
+  email: z.email("User ID is required"),
   amount: z.number().positive("Amount must be greater than 0"),
   description: z.string().optional()
 });

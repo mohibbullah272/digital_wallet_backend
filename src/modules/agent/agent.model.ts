@@ -1,11 +1,17 @@
 import mongoose, { Schema } from 'mongoose';
 import { IAgent } from '../../types/base.interfase';
 
+
 const agentSchema = new Schema<IAgent>({
   userId: {
     type: String,
     required: [true, 'User ID is required'],
     unique: true
+  },
+  email:{
+    type:String,
+    required:true,
+    unique:[true,"email already exist"]
   },
   commissionRate: {
     type: Number,

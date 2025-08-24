@@ -29,7 +29,8 @@ import { RegisterPayload, LoginPayload } from '../../types/base.interfase';
   
   // Create wallet for user
   const wallet = new Wallet({
-    userId: user._id as string
+    userId: user._id as string,
+    email:user.email as string
   });
   
   await wallet.save();
@@ -37,7 +38,8 @@ import { RegisterPayload, LoginPayload } from '../../types/base.interfase';
   // If role is agent, create agent profile
   if (role === 'agent') {
     const agent = new Agent({
-      userId: user._id as string
+      userId: user._id as string,
+      email:user.email as string
     });
     
     await agent.save();
@@ -111,6 +113,8 @@ import { RegisterPayload, LoginPayload } from '../../types/base.interfase';
     throw new Error('Invalid refresh token');
   }
 };
+
+
 
 export  const authService ={
     refreshToken,

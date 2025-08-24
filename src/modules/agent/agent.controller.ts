@@ -17,9 +17,9 @@ export const getMyAgentProfile = async (req: AuthRequest, res: Response): Promis
 export const cashIn = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const agentId = req.user!.id;
-    const { userId, amount, description } = req.body as AgentTransactionPayload;
+    const { email, amount, description } = req.body as AgentTransactionPayload;
     
-    const { userWallet, transaction } = await agentService.cashIn(agentId, userId, amount, description);
+    const { userWallet, transaction } = await agentService.cashIn(agentId, email, amount, description);
     
     successResponse(res, {
       userWallet,
@@ -33,9 +33,9 @@ export const cashIn = async (req: AuthRequest, res: Response): Promise<void> => 
 export const cashOut = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const agentId = req.user!.id;
-    const { userId, amount, description } = req.body as AgentTransactionPayload;
+    const { email, amount, description } = req.body as AgentTransactionPayload;
     
-    const { userWallet, transaction } = await agentService.cashOut(agentId, userId, amount, description);
+    const { userWallet, transaction } = await agentService.cashOut(agentId, email, amount, description);
     
     successResponse(res, {
       userWallet,

@@ -10,8 +10,8 @@ export const register = async (req: Request, res: Response): Promise<void> => {
     
     res.cookie("token", token, {
       httpOnly: true,       
-      secure:true,
-      sameSite: "strict",   
+      secure:false,
+      sameSite: "lax",   
     });
 
 
@@ -38,16 +38,16 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: true,
-      sameSite: "strict",
-      maxAge: 15 * 60 * 1000 // 15 min
+      secure: false,
+      sameSite: "lax",
+    
     });
 
     // set refresh token cookie
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
-      secure:true ,
-      sameSite: "strict",
+      secure:false ,
+      sameSite: "lax",
 
     });
 
@@ -79,4 +79,25 @@ export const refresh = async (req: Request, res: Response): Promise<void> => {
     errorResponse(res, error.message, 401);
   }
 };
+
+export const logout = (async (req: Request, res: Response) => {
+
+  res.clearCookie("token", {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax"
+  })
+  res.clearCookie("refreshToken", {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax"
+  })
+
+  successResponse(res, {
+      success: true,
+      statusCode: 201,
+      message: "User Logged Out Successfully",
+      data: null,
+  })
+})
 

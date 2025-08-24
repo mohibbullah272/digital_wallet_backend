@@ -7,6 +7,12 @@ const walletSchema = new Schema<IWallet>({
     required: [true, 'User ID is required'],
     unique: true
   },
+  email:{
+    type:String,
+    required: [true, 'email is required'],
+    unique:true
+    
+  },
   balance: {
     type: Number,
     required: [true, 'Balance is required'],

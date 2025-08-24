@@ -6,10 +6,11 @@ import { AuthRequest } from '../../types/base.interfase';
 export const getMyTransactions = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const userId = req.user!.id;
+    const email = req.user!.email
     const page = parseInt(req.query.page as string) || 1;
     const limit = parseInt(req.query.limit as string) || 10;
     
-    const result = await transactionService.getUserTransactions(userId, page, limit);
+    const result = await transactionService.getUserTransactions(email,userId, page, limit);
     
     successResponse(res, result, 'Transactions retrieved successfully');
   } catch (error:any) {

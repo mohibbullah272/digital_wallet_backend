@@ -28,7 +28,7 @@ export const cashIn = async (agentId: string, userId: string, amount: number, de
     }
     
     // Get user wallet
-    const userWallet = await Wallet.findOne({ userId }).session(session);
+    const userWallet = await Wallet.findOne({ email:userId }).session(session);
     if (!userWallet) {
       throw new Error('User wallet not found');
     }
@@ -91,7 +91,7 @@ export const cashOut = async (agentId: string, userId: string, amount: number, d
     }
     
     // Get user wallet
-    const userWallet = await Wallet.findOne({ userId }).session(session);
+    const userWallet = await Wallet.findOne({ email:userId }).session(session);
     if (!userWallet) {
       throw new Error('User wallet not found');
     }

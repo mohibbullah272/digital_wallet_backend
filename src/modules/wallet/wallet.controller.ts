@@ -1,7 +1,11 @@
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { walletService} from './wallet.service';
 import { successResponse, errorResponse } from '../../utility/response';
 import { AuthRequest, TransactionPayload, TransferPayload } from '../../types/base.interfase';
+import { Wallet } from './wallet.model';
+
+
+
 
 export const getMyWallet = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
@@ -49,16 +53,16 @@ export const withdraw = async (req: AuthRequest, res: Response): Promise<void> =
 
 export const transfer = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
-    const senderId = req.user!.id;
-    const { receiverId, amount, description } = req.body as TransferPayload;
+    const senderId = req.user!.email;
+    const { email, amount, description } = req.body as TransferPayload;
     
-    if (senderId === receiverId) {
+    if (senderId === email) {
       return errorResponse(res, 'Cannot transfer money to yourself', 400);
     }
     
     const { senderWallet, receiverWallet, transaction } = await walletService.transferMoney(
       senderId,
-      receiverId,
+      email,
       amount,
       description
     );

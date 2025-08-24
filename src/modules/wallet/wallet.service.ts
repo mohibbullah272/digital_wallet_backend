@@ -127,13 +127,13 @@ const withdrawMoney = async (userId: string, amount: number, description?: strin
   }
 };
 
- const transferMoney = async (senderId: string, receiverId: string, amount: number, description?: string): Promise<any> => {
+ const transferMoney = async (senderId: string, email: string, amount: number, description?: string): Promise<any> => {
   const session = await mongoose.startSession();
   session.startTransaction();
   
   try {
     // Get sender wallet
-    const senderWallet = await Wallet.findOne({ userId: senderId }).session(session);
+    const senderWallet = await Wallet.findOne({ email: senderId }).session(session);
     if (!senderWallet) {
       throw new Error('Sender wallet not found');
     }
@@ -143,7 +143,7 @@ const withdrawMoney = async (userId: string, amount: number, description?: strin
     }
     
     // Get receiver wallet
-    const receiverWallet = await Wallet.findOne({ userId: receiverId }).session(session);
+    const receiverWallet = await Wallet.findOne({ email: email }).session(session);
     if (!receiverWallet) {
       throw new Error('Receiver wallet not found');
     }
@@ -186,7 +186,7 @@ const withdrawMoney = async (userId: string, amount: number, description?: strin
       amount,
       fee,
       senderId,
-      receiverId,
+      email,
       initiatedBy: senderId,
       status: 'completed',
       referenceId: generateReferenceId(),

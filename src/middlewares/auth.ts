@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import {  Response, NextFunction } from 'express';
 import { verifyToken } from '../utility/jwt';
 import { AuthRequest } from '../types/base.interfase';
 
@@ -17,7 +17,7 @@ export const authenticate = (req: AuthRequest, res: Response, next: NextFunction
       token = req.cookies.token;
     }
 
-    console.log("Token:", token);
+ 
 
     if (!token) {
       return res.status(401).json({ success: false, message: "Access denied. No token provided." });

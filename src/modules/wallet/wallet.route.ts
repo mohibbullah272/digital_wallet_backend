@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getMyWallet, deposit, withdraw, transfer } from './wallet.controller';
+import { getMyWallet, deposit, withdraw, transfer, } from './wallet.controller';
 import { authenticate } from '../../middlewares/auth';
 import { validateRequest } from '../../middlewares/validate';
 import { transactionSchema, transferSchema } from '../../types/base.interfase';
